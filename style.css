@@ -1,0 +1,38 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+/* ===================================================== */
+/*======================== navbar =======================*/
+/* ==================================================== */
+.top-logo-name{
+    /* border: solid; */
+}
+.top-logo{
+    height:55px;
+    width: 55px;
+    /* border: solid; */
+    
+}
+.top-logo img{
+    /* border: solid; */
+    padding: auto;
+    height:55px;
+    width: 100%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    object-fit: contain;
+}
+
+/* .top-icon{
+    border-radius: 50%;
+    border: solid;
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    
+}
+.top-icon-parent{
+    display: flex;
+    justify-content: center;
+} */
