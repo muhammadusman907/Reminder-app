@@ -1,10 +1,70 @@
-function callBack(nameSelects){
-       setTimeout(function (){
-        var names  = "usman"
-         console.log(nameSelects(names))
-       } ,1000)
+var descriptionValue = document.getElementById("description-value");
+var timeDateValue = document.getElementById("date-time-value");
+var myTaskDiv = document.getElementById("my-task");
+var namazTimeDiv = document.getElementById("namaz-time");
+var interval = false;
+var currentDateGetMilliSec;
+var alarmDateGetMillsec;
+function saveBtn() {
+
+  interval = true;
+  var alarmDate = new Date(timeDateValue.value);
+  alarmDateGetMillsec = Math.round(alarmDate.getTime() / 1000)
+  var equal = currentDateGetMilliSec - alarmDateGetMillsec;
+  console.log(equal / 1000 / 60)
+  console.log(descriptionValue.value)
+  console.log(timeDateValue.value)
+
+  myTaskDiv.innerHTML += `
+<div class="mains">
+<div>
+  <p>${descriptionValue.value} , ${timeDateValue.value.slice(0, 10)}</p>
+</div>
+<div><span><i class="fa-solid fa-clock"></i></span>
+  <span>${timeDateValue.value.slice(11)}</span>
+</div>
+</div>`
+
+  descriptionValue.value = "";
+  timeDateValue.value = "";
 }
-function nameSelect(mill){
-    console.log(mill)
+
+setInterval(function () {
+  if (interval) {
+    var currentDate = new Date();
+    currentDateGetMilliSec = Math.round(currentDate.getTime() / 1000);
+
+    console.log("currrent", currentDateGetMilliSec)
+    console.log("aga", alarmDateGetMillsec)
+    if (currentDateGetMilliSec === alarmDateGetMillsec) {
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/serviceWorker.js")
+            .then(res => console.log("service worker registered"))
+            .catch(err => console.log("service worker not registered", err))  
+            alert(currentDateGetMilliSec, alarmDateGetMillsec)
+             interval = false;
+        })
+      }
+
+    
+    }
+
+
+  }
+}, 1000)
+
+
+
+function myTask() {
+  namazTimeDiv.style.display = "none";
+  myTaskDiv.style.display = "flex";
+
 }
-callBack(nameSelect)
+function namazTime() {
+  myTaskDiv.style.display = "none";
+  namazTimeDiv.style.display = "flex";
+}
+
+

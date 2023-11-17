@@ -3,36 +3,175 @@
     padding: 0px;
     box-sizing: border-box;
 }
+/* ======================== */
+/* ==============body====== */
+/* ======================== */
+body{
+    background-color: #FB4963 !important;
+    color: #fff ;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px grey;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d4d5d8;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #767677;
+}
+
 /* ===================================================== */
 /*======================== navbar =======================*/
 /* ==================================================== */
-.top-logo-name{
-    /* border: solid; */
+.bg-nav{
+    background-color: #FD7D94 !important;
 }
+/* .top-logo-name{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+     
+} */
 .top-logo{
     height:55px;
     width: 55px;
+    
     /* border: solid; */
     
+}
+.top-logo-name a {
+    color: #fff;
 }
 .top-logo img{
     /* border: solid; */
     padding: auto;
     height:55px;
     width: 100%;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     object-fit: contain;
 }
+/* ========================================= */
+/* ===================main================== */
+/* ========================================= */
 
-/* .top-icon{
-    border-radius: 50%;
-    border: solid;
-    width: 100%;
-    padding: 10px;
-    font-size: 15px;
-    
+
+.time-date-input{
+    display: flex;
+    justify-content:space-between;
+    width: 60%;
+    margin: auto;
+    margin-top: 10px;
+
 }
-.top-icon-parent{
+.time-date-input input{ 
+    width: 40%;
+}
+
+.main{
+    margin-top: 15px;
+    height: 150px;
+    /* width: 200px ;  */
+    border:solid 1px #FB4963;
+    background-color: #FD7D94;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
-} */
+}
+.main div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+}
+.mains-parent{
+   display: flex;
+   justify-content: space-around;
+   flex-wrap: wrap;
+}
+.mains{
+        margin-top: 15px;
+        height: 70px;
+        width: 80%;
+        /* min-width: 765; */
+        border:solid 1px #FB4963;
+        background-color: #FD7D94;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        border-radius: 15px;  
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+        color: #fff;
+        padding-left:4% ;
+        padding-right:4% ;
+        font-weight: bold;
+}
+
+
+@media  only screen and (max-width:765px) {
+    .mains-parent{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: center;
+     } 
+     .mains{
+        height: 70px;
+     }
+     .time-date-input{
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .time-date-input input{
+         margin-top: 15px;
+        width: 80%;
+     }
+     .time-date-input button{
+        margin-top: 10px;
+        width: 100px;
+     }
+
+}
+/* ================================================================= */
+/* ===============================sign up ========================== */
+/* ================================================================= */
+.login-container{
+    margin-top:50px !important;
+    height: 75vh;
+    width: 60%;
+    background-color: #FD7D94;
+    /* border: solid; */
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3%;
+}
+.login-container-child{
+    width: 50%;
+
+}
+.login-nav {
+    background-color: #FD7D94 !important;
+}
+.login-nav a{
+    color:#fff;
+
+}
+.login-container-child button{
+    margin-left: auto;
+}
+/* sweet alert */
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+    background-color:  #0d6efd !important;
+    width: 8rem;
+}
