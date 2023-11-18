@@ -1,3 +1,4 @@
+
 var descriptionValue = document.getElementById("description-value");
 var timeDateValue = document.getElementById("date-time-value");
 var myTaskDiv = document.getElementById("my-task");
@@ -33,25 +34,22 @@ setInterval(function () {
   if (interval) {
     var currentDate = new Date();
     currentDateGetMilliSec = Math.round(currentDate.getTime() / 1000);
+    console.log("serviceWorker" in navigator)
 
-    console.log("currrent", currentDateGetMilliSec)
-    console.log("aga", alarmDateGetMillsec)
+    if ("serviceWorker" in navigator) {
+      // window.addEventListener("load", function() {
+        navigator.serviceWorker.register("/serviceWorker.js")
+          .then(res => console.log( res ,"service worker registered"))
+          .catch(err => console.log("service worker not registered", err))  
+      // })
+    }
+    // console.log("currrent", currentDateGetMilliSec)
+    // console.log("aga", alarmDateGetMillsec)
     if (currentDateGetMilliSec === alarmDateGetMillsec) {
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function() {
-          navigator.serviceWorker
-            .register("/serviceWorker.js")
-            .then(res => console.log("service worker registered"))
-            .catch(err => console.log("service worker not registered", err))  
-            alert(currentDateGetMilliSec, alarmDateGetMillsec)
+      alert(currentDateGetMilliSec, alarmDateGetMillsec)
              interval = false;
-        })
-      }
-
     
     }
-
-
   }
 }, 1000)
 
