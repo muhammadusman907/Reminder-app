@@ -1,4 +1,11 @@
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("/serviceWorker.js")
+      .then(res => console.log( res ,"service worker registered"))
+      .catch(err => console.log("service worker not registered", err))  
+  })
+}
 var descriptionValue = document.getElementById("description-value");
 var timeDateValue = document.getElementById("date-time-value");
 var myTaskDiv = document.getElementById("my-task");
