@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>olx clone</title>
+  <title>Namaz Reminder</title>
   <!-- ========================================= -->
   <!-- ===============CUSTOM CSS================= -->
   <!-- ========================================= -->
@@ -15,16 +15,16 @@
   <!-- ===============BOOTSTRAP================= -->
   <!-- ========================================= -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
-    <!-- ==============*************==================== -->
-    
-    <!-- ========================================= -->
-    <!-- ===============SWEET ALERT================= -->
-    <!-- ========================================= -->
-    
+  <!-- ==============*************==================== -->
+
+  <!-- ========================================= -->
+  <!-- ===============SWEET ALERT================= -->
+  <!-- ========================================= -->
+
   <!-- ==============*************==================== -->
 
   <!-- ==============*************==================== -->
@@ -33,10 +33,10 @@
   <!-- ===============FONT AWSOME================= -->
   <!-- ========================================= -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-  integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- ==============*************==================== -->
-  
+
   <link rel="manifest" href="manifest.json" />
 </head>
 
@@ -50,7 +50,7 @@
     <div class="container-fluid">
 
       <div class="d-flex top-logo-name ms-5">
-        <div class="top-logo"><img class="rounded-circle" src="images/top-logo.png" alt=""></div> <a
+        <div class="top-logo"><img class="rounded-circle" src="images/task-image.jpeg" alt=""></div> <a
           class="navbar-brand pt-3 ps-3" href="#">Hello,User</a>
       </div>
 
@@ -82,7 +82,7 @@
             </li>-->
         </ul>
         <div class="d-flex" role="search">
-          <button class="btn btn-danger" >Login</button>
+          <button class="btn btn-danger">Login</button>
         </div>
       </div>
     </div>
@@ -90,19 +90,26 @@
 
   <!-- ==============*************==================== -->
 
-<div class="d-flex justify-content-around mt-2">
-  <button class="btn btn-danger" onclick="myTask()">My Task</button>
-  <button class="btn btn-danger" onclick="namazTime()">Namaz Time</button>
-</div>
+  <div class="d-flex justify-content-around mt-2">
+    <button class="btn btn-danger" onclick="myTask()"><i class="fa-solid fa-list-check"></i> Task</button>
+    <button class="btn btn-danger" onclick="namazTime()"><i class="fa-solid fa-mosque"></i>  Time</button>
+  </div>
 
   <!-- ========================================= -->
   <!-- ===============SITE CONTENT================= -->
   <!-- ========================================= -->
   <div class="container main">
+    <div class="minute-second d-flex">
+      <h1 id="hour">00</h1>:<h1 id="minute">00</h1>:<h1 id="second">00</h1>
+      <p class="pt-3 ps-2" id="clock-am-pm"></p>
+    </div>
     <div class="main-child">
-      <h1>Zhur</h1>
-      <h2>11:32</h2>
-      <p>monday ,febrauary 2023</p>
+      <h1 id="namaz-name">Zhur</h1>
+      <div class="d-flex align-items-center">
+        <h1 id="namaz-hour">11</h1>: <h1 id="namaz-minute">32</h1>
+      </div>
+      <div class="d-felx"> <span id="namaz-day">monday </span >,<span id="namaz-month">febrauary</span> <span
+          id="namaz-year">2023</span></div>
     </div>
   </div>
   <!-- ==============*************==================== -->
@@ -111,7 +118,7 @@
   <!-- ========================================= -->
   <!-- ===============MAIN CONTENT================= -->
   <!-- ========================================= -->
-  <div class="time-date-input">
+  <div id="edit-input" class="time-date-input" style="display: none;">
     <input type="datetime-local" class="form-control" id="date-time-value">
     <input type="text" class="form-control" placeholder="decription" id="description-value">
     <button class="btn btn-danger" onclick="saveBtn()">save</button>
@@ -151,14 +158,6 @@
         <span>7:30</span>
       </div>
     </div>
-    <!-- <div class="mains">
-      <div>
-        <p>asr , febrauary 2023 </p>
-      </div>
-      <div><span><i class="fa-solid fa-clock"></i></span>
-        <span>11:23</span>
-      </div>
-    </div> -->
   </div>
 
 
@@ -166,22 +165,7 @@
   <!-- ==========================second==================== -->
 
   <div class="mains-parent" style="display: none;" id="my-task">
-    <!-- <div class="mains">
-      <div>
-        <p>maghrib , febrauary 2023 </p>
-      </div>
-      <div><span><i class="fa-solid fa-clock"></i></span>
-        <span>11:23</span>
-      </div>
-    </div> -->
-    <!-- <div class="mains">
-      <div>
-        <p>maghrib , febrauary 2023 </p>
-      </div>
-      <div><span><i class="fa-solid fa-clock"></i></span>
-        <span>11:23</span>
-      </div>
-    </div> -->
+
   </div>
 
 

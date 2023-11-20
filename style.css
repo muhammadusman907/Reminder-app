@@ -8,7 +8,13 @@
 /* ======================== */
 body{
     background-color: #FB4963 !important;
-    color: #fff ;
+    color: #fff ; 
+    font-family: 'Kanit-Bold', sans-serif;
+    font-size: 100%;
+}
+@font-face {
+    font-family: 'Kanit-Bold';
+    src: url('font/Kanit-BoldItalic.ttf') format('truetype');
 }
 
 ::-webkit-scrollbar {
@@ -55,7 +61,7 @@ body{
     height:55px;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    object-fit: contain;
+    object-fit: cover;
 }
 /* ========================================= */
 /* ===================main================== */
@@ -83,13 +89,18 @@ body{
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 15px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
-.main div{
+.main-child{
     display: flex;
     flex-direction: column;
     align-items: center;
     color: #fff;
+}
+.minute-second{
+    display: flex;
+    color: #fff;
+    align-items: center;
 }
 .mains-parent{
    display: flex;
