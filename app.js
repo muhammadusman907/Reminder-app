@@ -6,6 +6,17 @@ if ("serviceWorker" in navigator) {
       .catch(err => console.log("service worker not registered", err))  
   })
 }
+window.addEventListener("load", () => {
+//  const askForNotificationPermission = () => { 
+      Notification.requestPermission(result => { 
+      if (result === 'granted') { 
+          displayConfirmNotification();
+          // configurePushSubscription(); 
+      } 
+   }
+   );
+// }
+});
 var descriptionValue = document.getElementById("description-value");
 var timeDateValue = document.getElementById("date-time-value");
 var myTaskDiv = document.getElementById("my-task");
@@ -23,6 +34,7 @@ var namazYear = document.getElementById("namaz-year");
 var editInput = document.getElementById("edit-input");
 var interval = false;
 var namazInterval = false ;
+var index = 0;
 var currentDateGetMilliSec;
 var alarmDateGetMillsec;
 var month= ["January","February","March","April","May","June","July", "August","September","October","November","December"];
@@ -30,13 +42,6 @@ var month= ["January","February","March","April","May","June","July", "August","
 setInterval(function(){
  
   // const button = document.getElementById("notifications");
-window.addEventListener("load", () => {
-  Notification.requestPermission().then((result) => {
-    if (result === "granted") {
-      randomNotification();
-    }
-  });
-});
   var clockDate = new Date();
   var clockHour = clockDate.getHours();
   var clockMinute = clockDate.getMinutes();
@@ -120,22 +125,24 @@ else if (clockHour > "01" && !namazInterval){
 ,1000
 )
 
-
+var miliSecMatch = [];
 function saveBtn() {
 
   interval = true;
   var alarmDate = new Date(timeDateValue.value);
   alarmDateGetMillsec = Math.round(alarmDate.getTime() / 1000)
-  var equal = currentDateGetMilliSec - alarmDateGetMillsec;
-  console.log(equal / 1000 / 60)
+  miliSecMatch.push(alarmDateGetMillsec);
+  // var equal = currentDateGetMilliSec - alarmDateGetMillsec;
+
+  // console.log(equal / 1000 / 60)
   console.log(descriptionValue.value)
   console.log(timeDateValue.value)
 
   myTaskDiv.innerHTML += `
 <div class="mains">
 <div>
-  <p>${descriptionValue.value} , ${timeDateValue.value.slice(0, 10)}</p>
-</div>
+  <p>${descriptionValue.value},${timeDateValue.value.slice(0, 10)}</p>
+</div>     
 <div><span><i class="fa-solid fa-clock"></i></span>
   <span>${timeDateValue.value.slice(11)}</span>
 </div>
@@ -149,15 +156,15 @@ setInterval(function () {
   if (interval) {
     var currentDate = new Date();
     currentDateGetMilliSec = Math.round(currentDate.getTime() / 1000);
-    
-    if (currentDateGetMilliSec === alarmDateGetMillsec) {
+    console.log(miliSecMatch)
+    if (currentDateGetMilliSec === miliSecMatch[index]) {
       if (!("Notification" in window)) {
         // Check if the browser supports notifications
         alert("This browser does not support desktop notification");
       } else if (Notification.permission === "granted") {
         // Check whether notification permissions have already been granted;
         // if so, create a notification
-        const notification = new Notification("Task ka time dakho so raha ho abhi!");
+        const notification = new Notification("Task ka time dakho so raha ho abhi tak !");
         // …
       } else if (Notification.permission !== "denied") {
         // We need to ask the user for permission
@@ -170,6 +177,15 @@ setInterval(function () {
         });
       }
              interval = false;
+             index++;
+    }
+    console.log(miliSecMatch)
+    if (miliSecMatch == []){
+      interval = false;
+    }
+    else{
+      interval = true
+      // alert("kam ok")
     }
   }
 }
