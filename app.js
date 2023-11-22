@@ -9,10 +9,7 @@ if ("serviceWorker" in navigator) {
 window.addEventListener("load", () => {
 //  const askForNotificationPermission = () => { 
       Notification.requestPermission(result => { 
-      if (result === 'granted') { 
-          displayConfirmNotification();
-          // configurePushSubscription(); 
-      } 
+
    }
    );
 // }
@@ -34,7 +31,9 @@ var namazYear = document.getElementById("namaz-year");
 var editInput = document.getElementById("edit-input");
 var interval = false;
 var namazInterval = false ;
+var namazTimeInterval = false ;
 var index = 0;
+var num = 0;
 var currentDateGetMilliSec;
 var alarmDateGetMillsec;
 var month= ["January","February","March","April","May","June","July", "August","September","October","November","December"];
@@ -54,7 +53,7 @@ setInterval(function(){
   namazMonth.innerHTML = month[clockMonth] ; 
   namazYear.innerHTML =  clockYear; 
   if (clockHour > 12 ){
-    clockHour = clockHour - 12
+    clockHour = clockHour - 12 
     clockAmPm.innerHTML = "pm"
     console.log(clockHour)
     namazInterval = false;
@@ -87,32 +86,39 @@ setInterval(function(){
 else if (clockHour === "05" && clockMinute  === "55"&& !namazInterval){
   alert("mughrib")
 }
-else if (clockHour === "07" && clockMinute  === "30" && !namazInterval){
-  alert("isha")
+
+else if (clockHour === "09" && clockMinute  === "12" && !namazInterval){
+  namazTimeInterval = true ;
+  if (namazTimeInterval){
+    alert("isha")
+    //  namazTimeInterval = false;
+  }
+  console.log(namazInterval)
 }
   // ================== namaz time banar =========
-  
-  if (clockHour > "07" && namazInterval){
-         namazName.innerHTML = "zhur"
-         namazHour.innerHTML = "01";
-         namazMinute.innerHTML = "05"; 
+  debugger
+  console.log(namazInterval)
+  if (clockHour > "07" && clockHour < "12" && namazInterval){
+    namazName.innerHTML = "zhur"
+    namazHour.innerHTML = "01";
+    namazMinute.innerHTML = "05"; 
   }
-  else if ( clockHour > "07" || clockHour > "01"  ){
+  else if ( clockHour > "07" && !namazInterval || clockHour < "07" && namazInterval  ){
   namazName.innerHTML = "fajar" 
   namazHour.innerHTML = "07";
   namazMinute.innerHTML = "05";
 }
-  else if (clockHour > "06" && !namazInterval ){
+  else if (clockHour > "06" && clockHour < "08" && !namazInterval ){
   namazName.innerHTML = "isha" 
   namazHour.innerHTML = "07";
   namazMinute.innerHTML = "30";
 }
-  else if (clockHour > "04" && !namazInterval ){
+  else if (clockHour > "04" && clockHour < "06" && !namazInterval ){
   namazName.innerHTML = "maghrib" 
   namazHour.innerHTML = "06";
   namazMinute.innerHTML = "55";
 }
-else if (clockHour > "01" && !namazInterval){
+else if (clockHour > "01" && clockHour < "04" && !namazInterval){
     namazName.innerHTML = "asar" 
     namazHour.innerHTML = "04";
     namazMinute.innerHTML = "30";
@@ -139,17 +145,22 @@ function saveBtn() {
   console.log(timeDateValue.value)
 
   myTaskDiv.innerHTML += `
-<div class="mains">
+<div class="mains animate__animated animate__bounceInDown" id="add-task">
 <div>
-  <p>${descriptionValue.value},${timeDateValue.value.slice(0, 10)}</p>
+  <p> <span class="roman-text">${num}</span> 
+  ${descriptionValue.value} ${timeDateValue.value.slice(0, 10)}</p>
 </div>     
-<div><span><i class="fa-solid fa-clock"></i></span>
-  <span>${timeDateValue.value.slice(11)}</span>
+
+<div>
+<span><i class="fa-solid fa-clock"></i></span>
+<span>${timeDateValue.value.slice(11)}</span>
+<button class="btn btn-danger ms-3" onclick="del(this)"><i class="fa-solid fa-delete-left"></i></button>
 </div>
 </div>`
 
   descriptionValue.value = "";
   timeDateValue.value = "";
+  num++
 }
 
 setInterval(function () {
@@ -157,7 +168,9 @@ setInterval(function () {
     var currentDate = new Date();
     currentDateGetMilliSec = Math.round(currentDate.getTime() / 1000);
     console.log(miliSecMatch)
-    if (currentDateGetMilliSec === miliSecMatch[index]) {
+    miliSecMatch.forEach(function(v){
+            console.log(v)
+          if (currentDateGetMilliSec === v) {
       if (!("Notification" in window)) {
         // Check if the browser supports notifications
         alert("This browser does not support desktop notification");
@@ -176,11 +189,16 @@ setInterval(function () {
           }
         });
       }
+            console.log(miliSecMatch)
              interval = false;
+            //  miliSecMatch.unshift()
              index++;
     }
+    })
+    
     console.log(miliSecMatch)
     if (miliSecMatch == []){
+      alert("khali")
       interval = false;
     }
     else{
@@ -202,6 +220,15 @@ function myTask() {
 function namazTime() {
   myTaskDiv.style.display = "none";
   namazTimeDiv.style.display = "flex";
-}
+  editInput.style.display = "none";
 
+}
+function del(e){
+      // var taskAdd = document.getElementById("task-add")
+      var numNumber = parseInt(e.parentNode.parentNode.childNodes[1].childNodes[1].innerText) ;
+      console.log( numNumber)
+      miliSecMatch.splice(numNumber , 1,"")
+      console.log(e.parentNode.parentNode.childNodes[1].childNodes[1].innerText)
+      e.parentNode.parentNode.remove()
+}
 
