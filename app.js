@@ -14,6 +14,23 @@ window.addEventListener("load", () => {
   );
   // }
 });
+
+//  ================== sign up page=============
+var userName = document.getElementById("user-name");
+var signupEmail = document.getElementById("signup-email");
+var signupPassword = document.getElementById("signup-password");
+// ================ regex ====================
+var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+// =====================login =========================
+var loginEmail = document.getElementById("login-email")
+var loginPassword = document.getElementById("login-password")
+var names = document.getElementById("user-name")
+// ===============================logout=================
+var logoutBtn = document.getElementById("logout")
+
+
+
+
 var descriptionValue = document.getElementById("description-value");
 var timeDateValue = document.getElementById("date-time-value");
 var myTaskDiv = document.getElementById("my-task");
@@ -72,7 +89,7 @@ setInterval(function () {
     clockSecond = "0" + clockSecond;
   }
   // ================== namaz time condition =========
-    
+
   if (clockHour == "09" && clockMinute == "25" && clockSecond == "10" && namazInterval) {
     // alert("fajar")
     namazTimeInterval = true;
@@ -142,34 +159,49 @@ setInterval(function () {
 
 var miliSecMatch = [];
 function saveBtn() {
-
-  interval = true;
-  var alarmDate = new Date(timeDateValue.value);
-  alarmDateGetMillsec = Math.round(alarmDate.getTime() / 1000)
-  miliSecMatch.push(alarmDateGetMillsec);
-  // var equal = currentDateGetMilliSec - alarmDateGetMillsec;
-
-  // console.log(equal / 1000 / 60)
-  console.log(descriptionValue.value)
-  console.log(timeDateValue.value)
-
-  myTaskDiv.innerHTML += `
+  if (timeDateValue.value.trim() === "") {
+    alert("Please select Date")
+  }
+  else if (descriptionValue.value.trim() === "") {
+    Swal.fire({
+      icon: 'error',
+      title: 'Required Description',
+      showConfirmButton: true,
+    })
+  }
+  else {
+    Swal.fire({
+      icon: 'success',
+      title: 'Task Add successFully',
+      showConfirmButton:false,
+      timer:"1500"
+    })
+    interval = true;
+    var alarmDate = new Date(timeDateValue.value);
+    alarmDateGetMillsec = Math.round(alarmDate.getTime() / 1000)
+    miliSecMatch.push(alarmDateGetMillsec);
+  
+    myTaskDiv.innerHTML += `
 <div class="mains animate__animated animate__bounceInDown" id="add-task">
 <div>
   <p> <span class="roman-text">${num}</span> 
-  ${descriptionValue.value} ${timeDateValue.value.slice(0, 10)}</p>
+  ${descriptionValue.value} ${timeDateValue.value.slice(0,10)}</p>
 </div>     
 
 <div>
 <span><i class="fa-solid fa-clock"></i></span>
-<span>${timeDateValue.value.slice(11)}</span>
+
+<span>${formattedTime = moment(timeDateValue.value.slice(11), "HH:mm:ss").format(
+      "h:mm:ss A"
+    )}</span>
 <button class="btn btn-danger ms-3" onclick="del(this)"><i class="fa-solid fa-delete-left"></i></button>
 </div>
 </div>`
 
-  descriptionValue.value = "";
-  timeDateValue.value = "";
-  num++
+    descriptionValue.value = "";
+    timeDateValue.value = "";
+    num++
+  }
 }
 
 setInterval(function () {
@@ -240,4 +272,138 @@ function del(e) {
   console.log(e.parentNode.parentNode.childNodes[1].childNodes[1].innerText)
   e.parentNode.parentNode.remove()
 }
+// =======================================================================//
+//============================ signup ======================================
+// =======================================================================//
 
+function signup() {
+  if (userName.value.trim() !== "" && signupEmail.value.trim() !== "" && signupPassword.value.trim() !== "") {
+    if (signupEmail.value.toLowerCase().match(regex)) {
+      if (signupPassword.value.length < 7) {
+        Swal.fire({
+          icon: 'error',
+          title: 'passwod chota hai',
+          showConfirmButton: true,
+        })
+        // alert("passwod chota hai")
+      }
+      else {
+        var obj = {
+          user_name: userName.value,
+          signup_email: signupEmail.value,
+          signup_password: signupPassword.value,
+        }
+        console.log(obj)
+        var userDataStr = JSON.stringify(obj);
+        localStorage.setItem("userData", userDataStr);
+        Swal.fire({
+          icon: 'success',
+          title: 'signup successfully',
+          showConfirmButton: true,
+        })
+        setInterval(function () {
+          location.href = "./login.html"
+        }, 2000)
+
+
+        // console.log(userName.value) // ================ user name
+        // console.log(signupEmail.value);// ============= user email
+        // console.log(signupPassword.value); ============ user password
+      }
+    }
+    else {
+      Swal.fire({
+        icon: 'error',
+        title: 'email incorrect',
+        showConfirmButton: true,
+      })
+      // alert("email incorrect")
+    }
+  }
+  else {
+    Swal.fire({
+      icon: 'error',
+      title: 'input not filled',
+      showConfirmButton: true,
+    })
+    // alert("not found")
+  }
+}
+// ========================= login ======================== //
+
+function login() {
+  if (loginPassword.value.trim() !== "" && loginEmail.value.trim() !== "") {
+    if (loginEmail.value.toLowerCase().match(regex)) {
+      if (loginPassword.value.length < 7) {
+        // alert(" passwod chota hai")
+        Swal.fire({
+          icon: 'error',
+          title: 'passwod chota hai',
+          showConfirmButton: true,
+        })
+      }
+      else {
+        console.log(loginEmail.value);
+        console.log(loginPassword.value);
+        var userDataParse = JSON.parse(localStorage.getItem("userData"))
+        console.log(userDataParse)
+        if (loginEmail.value === userDataParse.signup_email) {
+          if (loginPassword.value === userDataParse.signup_password) {
+            Swal.fire({
+              icon: 'success',
+              title: 'login successfully',
+              showConfirmButton: true,
+            })
+            setInterval(function () {
+              // alert("login successfully")
+              location.href = "./index.html"
+            }, 1000
+            )
+
+          }
+          else {
+            Swal.fire({
+              icon: 'error',
+              title: 'incorrect password',
+              showConfirmButton: true,
+            })
+            // alert("incorrect password")
+          }
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'email not found',
+            showConfirmButton: true,
+          })
+          // alert("email not found")
+        }
+
+      }
+    }
+    else {
+      Swal.fire({
+        icon: 'error',
+        title: 'email incorrecrt',
+        showConfirmButton: true,
+      })
+      // alert("email incorrecrt")
+    }
+  }
+  else {
+    Swal.fire({
+      icon: 'error',
+      title: 'input not filled',
+      showConfirmButton: true,
+    })
+    // alert("input not filled")
+  }
+}
+// ================================= logout =============================//
+function logout() {
+  location.href = "./login.html";
+}
+// ================================= user name===========================//
+var parsename = JSON.parse(localStorage.getItem("userData"))
+if (names) {
+  names.innerText =`Hello ${parsename.user_name}`;
+}
