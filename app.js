@@ -90,34 +90,108 @@ setInterval(function () {
   }
   // ================== namaz time condition =========
 
-  if (clockHour == "09" && clockMinute == "25" && clockSecond == "10" && namazInterval) {
-    // alert("fajar")
-    namazTimeInterval = true;
-    if (namazTimeInterval) {
-      namazTimeInterval = false;
-      alert("fajars")
+  if (clockHour == "07" && clockMinute == "05" && clockSecond == "00" && namazInterval) {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      // Check whether notification permissions have already been granted;
+      // if so, create a notification
+      const notification = new Notification("fajar namaz prayer !");
+      // …
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification(de);
+          // …
+        }
+      });
     }
-    // else if(!namazTimeInterval){
-    //  alert("kahtam")
-    // }
   }
 
-  else if (clockHour === "01" && clockMinute === "00" && !namazInterval) {
-    alert("zhur")
+  else if (clockHour == "01" && clockMinute == "00" && clockSecond == "00" && !namazInterval) {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      // Check whether notification permissions have already been granted;
+      // if so, create a notification
+      const notification = new Notification("zhur namaz prayer !");
+      // …
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification(de);
+          // …
+        }
+      });
+    }
   }
 
-  else if (clockHour === "04" && clockMinute === "30" && !namazInterval) {
-    alert("asar")
+  else if (clockHour == "04" && clockMinute == "30" && clockSecond == "00" && !namazInterval) {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      // Check whether notification permissions have already been granted;
+      // if so, create a notification
+      const notification = new Notification("asar namaz prayer!");
+      // …
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification(de);
+          // …
+        }
+      });
+    }
   }
-  else if (clockHour === "05" && clockMinute === "55" && !namazInterval) {
-    alert("mughrib")
+  else if (clockHour == "05" && clockMinute == "55" && clockSecond == "00" && !namazInterval) {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      // Check whether notification permissions have already been granted;
+      // if so, create a notification
+      const notification = new Notification("maghrib namaz time!");
+      // …
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification(de);
+          // …
+        }
+      });
+    }
   }
 
-  else if (clockHour === "09" && clockMinute === "12" && !namazInterval) {
-    namazTimeInterval = true;
-    if (namazTimeInterval) {
-      alert("isha")
-      //  namazTimeInterval = false;
+  else if (clockHour == "07" && clockMinute == "30" && clockSecond == "00" && !namazInterval) {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      // Check whether notification permissions have already been granted;
+      // if so, create a notification
+      const notification = new Notification("isha namaz time!");
+      // …
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification(de);
+          // …
+        }
+      });
+
     }
     console.log(namazInterval)
   }
@@ -173,19 +247,19 @@ function saveBtn() {
     Swal.fire({
       icon: 'success',
       title: 'Task Add successFully',
-      showConfirmButton:false,
-      timer:"1500"
+      showConfirmButton: false,
+      timer: "1500"
     })
     interval = true;
     var alarmDate = new Date(timeDateValue.value);
     alarmDateGetMillsec = Math.round(alarmDate.getTime() / 1000)
     miliSecMatch.push(alarmDateGetMillsec);
-  
+
     myTaskDiv.innerHTML += `
 <div class="mains animate__animated animate__bounceInDown" id="add-task">
 <div>
   <p> <span class="roman-text">${num}</span> 
-  ${descriptionValue.value} ${timeDateValue.value.slice(0,10)}</p>
+  ${descriptionValue.value} ${timeDateValue.value.slice(0, 10)}</p>
 </div>     
 
 <div>
@@ -356,7 +430,7 @@ function login() {
             })
             setInterval(function () {
               // alert("login successfully")
-              location.href = "./index.html"
+              location.href = "./reminder.html"
             }, 1000
             )
 
@@ -405,5 +479,5 @@ function logout() {
 // ================================= user name===========================//
 var parsename = JSON.parse(localStorage.getItem("userData"))
 if (names) {
-  names.innerText =`Hello ${parsename.user_name}`;
+  names.innerText = `Hello ${parsename.user_name}`;
 }
